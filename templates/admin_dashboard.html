@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard | CampusCare{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+        <span class="eyebrow">ADMINISTRATION</span>
+        <h1>Complaint Management</h1>
+
+        <p>
+            Review incoming complaints and manage their resolution.
+        </p>
+    </div>
+
+    <div class="admin-user-chip">
+        <span class="admin-avatar">A</span>
+
+        <div>
+            <strong>Administrator</strong>
+            <small>{{ session.get('admin_username') }}</small>
+        </div>
+    </div>
+
+</section>
+
+<section class="stats-grid">
+
+    <article class="stat-card">
+        <div class="stat-icon icon-blue">C</div>
+        <div>
+            <span>Total Complaints</span>
+            <h2>{{ statistics.total }}</h2>
+        </div>
+    </article>
+
+    <article class="stat-card">
+        <div class="stat-icon icon-orange">P</div>
+        <div>
+            <span>Pending</span>
+            <h2>{{ statistics.pending }}</h2>
+        </div>
+    </article>
+
+    <article class="stat-card">
+        <div class="stat-icon icon-purple">W</div>
+        <div>
+            <span>In Progress</span>
+            <h2>{{ statistics.in_progress }}</h2>
+        </div>
+    </article>
+
+    <article class="stat-card">
+        <div class="stat-icon icon-green">✓</div>
+        <div>
+            <span>Resolved</span>
+            <h2>{{ statistics.resolved }}</h2>
+        </div>
+    </article>
+
+</section>
+
+<section class="content-card">
+
+    <div class="card-heading">
+        <div>
+            <h2>All Complaints</h2>
+            <p>Search, filter, and review submitted complaints.</p>
+        </div>
+
+        <span class="result-count">
+            {{ complaints|length }} result(s)
+        </span>
+    </div>
+
+    <form method="GET" class="filter-bar">
+
+        <div class="form-group filter-search">
+            <label for="search">Search</label>
+
+            <input
+                id="search"
+                name="search"
+                value="{{ search }}"
+                placeholder="ID, title, student, register number"
+            >
+        </div>
+
+        <div class="form-group">
+            <label for="status">Status</label>
+
+            <select id="status" name="status">
+                <option value="">All statuses</option>
+
+                {% for item in statuses %}
+                    <option
+                        value="{{ item }}"
+                        {% if selected_status == item %}selected{% endif %}
+                    >
+                        {{ item }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="category">Category</label>
+
+            <select id="category" name="category">
+                <option value="">All categories</option>
+
+                {% for item in categories %}
+                    <option
+                        value="{{ item }}"
+                        {% if selected_category == item %}selected{% endif %}
+                    >
+                        {{ item }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="filter-actions">
+            <button type="submit" class="btn btn-primary">
+                Filter
+            </button>
+
+            <a
+                href="{{ url_for('admin_dashboard') }}"
+                class="btn btn-outline"
+            >
+                Reset
+            </a>
+        </div>
+
+    </form>
+
+    {% if complaints %}
+
+        <div class="table-wrap">
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Complaint</th>
+                        <th>Student</th>
+                        <th>Category</th>
+                        <th>Priority</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for complaint in complaints %}
+
+                        <tr>
+
+                            <td>
+                                <strong>{{ complaint.complaint_code }}</strong>
+                                <small class="table-subtitle">
+                                    {{ complaint.title }}
+                                </small>
+                            </td>
+
+                            <td>
+                                <strong>{{ complaint.student_name }}</strong>
+
+                                <small class="table-subtitle">
+                                    {{ complaint.register_number }}
+                                </small>
+                            </td>
+
+                            <td>{{ complaint.category }}</td>
+
+                            <td>
+                                <span class="badge priority-{{ complaint.priority|lower }}">
+                                    {{ complaint.priority }}
+                                </span>
+                            </td>
+
+                            <td>{{ complaint.created_at }}</td>
+
+                            <td>
+                                <span class="badge status-{{ complaint.status|lower|replace(' ', '-') }}">
+                                    {{ complaint.status }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <a
+                                    class="btn btn-small btn-primary"
+                                    href="{{ url_for('admin_complaint_detail', complaint_id=complaint.id) }}"
+                                >
+                                    Review
+                                </a>
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+            <div class="empty-icon">C</div>
+
+            <h3>No complaints found</h3>
+
+            <p>
+                No complaints match the selected filters.
+            </p>
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

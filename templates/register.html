@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}Student Registration | CampusCare{% endblock %}
+
+{% block content %}
+
+<section class="auth-layout">
+
+    <div class="auth-side">
+
+        <span class="eyebrow">JOIN CAMPUSCARE</span>
+
+        <h1>Your voice can make a difference.</h1>
+
+        <p>
+            Create your student account to report issues,
+            track complaints, and contribute to a better campus.
+        </p>
+
+        <div class="auth-benefits">
+            <p>✓ Submit campus complaints online</p>
+            <p>✓ Track complaint status</p>
+            <p>✓ View administrator responses</p>
+        </div>
+
+    </div>
+
+    <div class="auth-card">
+
+        <div class="auth-heading">
+            <h2>Create your account</h2>
+            <p>Enter your student information below.</p>
+        </div>
+
+        <form method="POST" class="form-grid">
+
+            <div class="form-group full-width">
+                <label for="name">Full Name *</label>
+
+                <input
+                    id="name"
+                    type="text"
+                    name="name"
+                    maxlength="100"
+                    placeholder="Enter your full name"
+                    autocomplete="name"
+                    required
+                >
+            </div>
+
+            <div class="form-group full-width">
+                <label for="register_number">Register Number *</label>
+
+                <input
+                    id="register_number"
+                    type="text"
+                    name="register_number"
+                    maxlength="30"
+                    placeholder="Enter your register number"
+                    required
+                >
+            </div>
+
+            <div class="form-group full-width">
+                <label for="email">Email Address *</label>
+
+                <input
+                    id="email"
+                    type="email"
+                    name="email"
+                    placeholder="student@example.com"
+                    autocomplete="email"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="department">Department *</label>
+
+                <select id="department" name="department" required>
+                    <option value="">Select department</option>
+
+                    {% for department in departments %}
+                        <option value="{{ department }}">
+                            {{ department }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="year_of_study">Year *</label>
+
+                <select
+                    id="year_of_study"
+                    name="year_of_study"
+                    required
+                >
+                    <option value="">Select year</option>
+                    <option value="1">First Year</option>
+                    <option value="2">Second Year</option>
+                    <option value="3">Third Year</option>
+                    <option value="4">Fourth Year</option>
+                    <option value="5">Fifth Year</option>
+                    <option value="6">Sixth Year</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password *</label>
+
+                <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    minlength="8"
+                    autocomplete="new-password"
+                    placeholder="Minimum 8 characters"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">Confirm Password *</label>
+
+                <input
+                    id="confirm_password"
+                    type="password"
+                    name="confirm_password"
+                    minlength="8"
+                    autocomplete="new-password"
+                    placeholder="Repeat password"
+                    required
+                >
+            </div>
+
+            <div class="full-width">
+                <button class="btn btn-primary btn-block" type="submit">
+                    Create Student Account &rarr;
+                </button>
+            </div>
+
+        </form>
+
+        <p class="auth-switch">
+            Already registered?
+            <a href="{{ url_for('login') }}">Sign in</a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}

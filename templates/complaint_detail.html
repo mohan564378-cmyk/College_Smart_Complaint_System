@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+
+{% block title %}Complaint Details | CampusCare{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+        <span class="eyebrow">COMPLAINT TRACKING</span>
+        <h1>Complaint Details</h1>
+        <p>Review your complaint and administrator updates.</p>
+    </div>
+
+    <a href="{{ url_for('my_complaints') }}" class="btn btn-outline">
+        &larr; Back to Complaints
+    </a>
+
+</section>
+
+<div class="detail-layout">
+
+    <section class="content-card">
+
+        <div class="detail-top">
+
+            <div>
+                <span class="detail-id">
+                    {{ complaint.complaint_code }}
+                </span>
+
+                <h2>{{ complaint.title }}</h2>
+            </div>
+
+            <span class="badge status-{{ complaint.status|lower|replace(' ', '-') }}">
+                {{ complaint.status }}
+            </span>
+
+        </div>
+
+        <div class="detail-grid">
+
+            <div class="detail-item">
+                <span>Category</span>
+                <strong>{{ complaint.category }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Priority</span>
+                <strong>{{ complaint.priority }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Location</span>
+                <strong>{{ complaint.location }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Submitted On</span>
+                <strong>{{ complaint.created_at }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Last Updated</span>
+                <strong>{{ complaint.updated_at }}</strong>
+            </div>
+
+        </div>
+
+        <div class="description-block">
+            <h3>Complaint Description</h3>
+            <p class="preserve-lines">{{ complaint.description }}</p>
+        </div>
+
+        <div class="description-block response-block">
+            <h3>Administrator Response</h3>
+
+            {% if complaint.admin_response %}
+                <p class="preserve-lines">
+                    {{ complaint.admin_response }}
+                </p>
+            {% else %}
+                <p class="muted-text">
+                    No administrator response has been added yet.
+                </p>
+            {% endif %}
+        </div>
+
+    </section>
+
+    <aside class="side-info">
+
+        <div class="info-card">
+            <h3>Complaint Status</h3>
+
+            <p>
+                Your complaint is currently
+                <strong>{{ complaint.status }}</strong>.
+            </p>
+
+            <p class="muted-text">
+                Administrators update the status as they
+                review and handle the issue.
+            </p>
+        </div>
+
+    </aside>
+
+</div>
+
+{% endblock %}

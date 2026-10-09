@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}Review Complaint | CampusCare{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+        <span class="eyebrow">ADMINISTRATION</span>
+        <h1>Review Complaint</h1>
+
+        <p>
+            Review the student's concern and record your response.
+        </p>
+    </div>
+
+    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline">
+        &larr; Back to Dashboard
+    </a>
+
+</section>
+
+<div class="detail-layout">
+
+    <section class="content-card">
+
+        <div class="detail-top">
+
+            <div>
+                <span class="detail-id">
+                    {{ complaint.complaint_code }}
+                </span>
+
+                <h2>{{ complaint.title }}</h2>
+            </div>
+
+            <span class="badge status-{{ complaint.status|lower|replace(' ', '-') }}">
+                {{ complaint.status }}
+            </span>
+
+        </div>
+
+        <div class="detail-grid">
+
+            <div class="detail-item">
+                <span>Student Name</span>
+                <strong>{{ complaint.student_name }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Register Number</span>
+                <strong>{{ complaint.register_number }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Email</span>
+                <strong>{{ complaint.email }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Department</span>
+                <strong>{{ complaint.department }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Year</span>
+                <strong>{{ complaint.year_of_study }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Location</span>
+                <strong>{{ complaint.location }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Category</span>
+                <strong>{{ complaint.category }}</strong>
+            </div>
+
+            <div class="detail-item">
+                <span>Priority</span>
+                <strong>{{ complaint.priority }}</strong>
+            </div>
+
+        </div>
+
+        <div class="description-block">
+            <h3>Complaint Description</h3>
+
+            <p class="preserve-lines">
+                {{ complaint.description }}
+            </p>
+        </div>
+
+        <form method="POST" class="admin-update-form">
+
+            <h3>Update Complaint</h3>
+
+            <div class="form-group">
+                <label for="status">Complaint Status *</label>
+
+                <select id="status" name="status" required>
+                    {% for item in statuses %}
+                        <option
+                            value="{{ item }}"
+                            {% if complaint.status == item %}selected{% endif %}
+                        >
+                            {{ item }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="admin_response">Administrator Response</label>
+
+                <textarea
+                    id="admin_response"
+                    name="admin_response"
+                    rows="5"
+                    maxlength="5000"
+                    placeholder="Enter the action taken or a response for the student."
+                >{{ complaint.admin_response }}</textarea>
+            </div>
+
+            <div class="form-actions">
+
+                <a
+                    href="{{ url_for('admin_dashboard') }}"
+                    class="btn btn-outline"
+                >
+                    Cancel
+                </a>
+
+                <button type="submit" class="btn btn-primary">
+                    Save Changes
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+    <aside class="side-info">
+
+        <div class="info-card">
+            <h3>Review Guidelines</h3>
+
+            <p>
+                Read the complaint carefully before changing its status.
+            </p>
+
+            <p>
+                Use <strong>In Progress</strong> when work has started.
+            </p>
+
+            <p>
+                Use <strong>Resolved</strong> after the issue has been
+                addressed.
+            </p>
+
+            <p>
+                Provide a clear response so the student understands
+                the action taken.
+            </p>
+        </div>
+
+    </aside>
+
+</div>
+
+{% endblock %}

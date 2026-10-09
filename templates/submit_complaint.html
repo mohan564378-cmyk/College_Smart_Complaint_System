@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}Submit Complaint | CampusCare{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+        <span class="eyebrow">STUDENT SERVICES</span>
+        <h1>Submit a Complaint</h1>
+
+        <p>
+            Describe the issue clearly so the relevant team
+            can review it.
+        </p>
+    </div>
+
+    <a href="{{ url_for('my_complaints') }}" class="btn btn-outline">
+        My Complaints
+    </a>
+
+</section>
+
+<div class="form-layout">
+
+    <section class="content-card form-card">
+
+        <div class="card-heading">
+            <div>
+                <h2>Complaint Details</h2>
+                <p>Fields marked * are required.</p>
+            </div>
+        </div>
+
+        <form method="POST">
+
+            <div class="form-group">
+                <label for="title">Complaint Title *</label>
+
+                <input
+                    id="title"
+                    name="title"
+                    type="text"
+                    maxlength="200"
+                    placeholder="Example: Projector not working"
+                    required
+                >
+            </div>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label for="category">Category *</label>
+
+                    <select id="category" name="category" required>
+                        <option value="">Select category</option>
+
+                        {% for category in categories %}
+                            <option value="{{ category }}">
+                                {{ category }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="priority">Priority *</label>
+
+                    <select id="priority" name="priority" required>
+                        {% for priority in priorities %}
+                            <option
+                                value="{{ priority }}"
+                                {% if priority == 'Medium' %}selected{% endif %}
+                            >
+                                {{ priority }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location *</label>
+
+                <input
+                    id="location"
+                    name="location"
+                    type="text"
+                    maxlength="200"
+                    placeholder="Example: Block A, Room 204"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description *</label>
+
+                <textarea
+                    id="description"
+                    name="description"
+                    rows="7"
+                    maxlength="10000"
+                    placeholder="Explain the problem, when it started, and how it affects you."
+                    required
+                ></textarea>
+
+                <small class="field-help">
+                    Please provide clear and accurate information.
+                </small>
+            </div>
+
+            <div class="form-actions">
+
+                <a
+                    href="{{ url_for('student_dashboard') }}"
+                    class="btn btn-outline"
+                >
+                    Cancel
+                </a>
+
+                <button type="submit" class="btn btn-primary">
+                    Submit Complaint &rarr;
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+    <aside class="side-info">
+
+        <div class="info-card">
+            <div class="feature-icon">01</div>
+
+            <h3>Be specific</h3>
+
+            <p>
+                Include the exact campus location and
+                a clear description of the issue.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="feature-icon">02</div>
+
+            <h3>Choose priority carefully</h3>
+
+            <p>
+                Select a priority that accurately represents
+                the urgency of the issue.
+            </p>
+        </div>
+
+        <div class="info-card">
+            <div class="feature-icon">03</div>
+
+            <h3>Track your complaint</h3>
+
+            <p>
+                Save your complaint ID and revisit
+                your dashboard for status updates.
+            </p>
+        </div>
+
+    </aside>
+
+</div>
+
+{% endblock %}

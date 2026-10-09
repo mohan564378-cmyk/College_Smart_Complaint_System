@@ -1,0 +1,221 @@
+{% extends "base.html" %}
+
+{% block title %}CampusCare | College Complaint Portal{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <span class="eyebrow">YOUR CAMPUS. YOUR VOICE.</span>
+
+        <h1>
+            A better campus<br>
+            begins with <span>your voice.</span>
+        </h1>
+
+        <p>
+            Report campus issues, track your complaints,
+            and help create a better learning environment.
+            Every concern matters.
+        </p>
+
+        <div class="hero-actions">
+
+            {% if session.get('student_id') %}
+
+                <a
+                    href="{{ url_for('submit_complaint') }}"
+                    class="btn btn-light"
+                >
+                    + Submit a Complaint
+                </a>
+
+                <a
+                    href="{{ url_for('my_complaints') }}"
+                    class="btn btn-outline-light"
+                >
+                    Track Complaints
+                </a>
+
+            {% else %}
+
+                <a href="{{ url_for('register') }}" class="btn btn-light">
+                    Get Started &rarr;
+                </a>
+
+                <a
+                    href="{{ url_for('login') }}"
+                    class="btn btn-outline-light"
+                >
+                    Student Login
+                </a>
+
+            {% endif %}
+
+        </div>
+
+        <div class="hero-note">
+            <span class="live-dot"></span>
+            A transparent and organized complaint process
+        </div>
+
+    </div>
+
+    <div class="hero-visual">
+
+        <div class="visual-orbit orbit-one"></div>
+        <div class="visual-orbit orbit-two"></div>
+
+        <div class="hero-illustration">
+
+            <div class="illustration-icon">C</div>
+
+            <h3>CampusCare</h3>
+
+            <p>Your concern. Our responsibility.</p>
+
+            <div class="illustration-line">
+                <span>✓</span>
+                Report campus issues
+            </div>
+
+            <div class="illustration-line">
+                <span>✓</span>
+                Track progress
+            </div>
+
+            <div class="illustration-line">
+                <span>✓</span>
+                Receive updates
+            </div>
+
+        </div>
+
+        <div class="floating-card floating-top">
+            <span class="floating-icon">✓</span>
+            <div>
+                <strong>Stay informed</strong>
+                <small>Track complaint progress</small>
+            </div>
+        </div>
+
+        <div class="floating-card floating-bottom">
+            <span class="floating-icon">C</span>
+            <div>
+                <strong>Every voice matters</strong>
+                <small>A better campus for everyone</small>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="stats-grid home-stats">
+
+    <article class="stat-card">
+        <div class="stat-icon icon-blue">C</div>
+        <div>
+            <span>Total Complaints</span>
+            <h2>{{ statistics.total }}</h2>
+        </div>
+    </article>
+
+    <article class="stat-card">
+        <div class="stat-icon icon-orange">P</div>
+        <div>
+            <span>Pending</span>
+            <h2>{{ statistics.pending }}</h2>
+        </div>
+    </article>
+
+    <article class="stat-card">
+        <div class="stat-icon icon-purple">W</div>
+        <div>
+            <span>In Progress</span>
+            <h2>{{ statistics.in_progress }}</h2>
+        </div>
+    </article>
+
+    <article class="stat-card">
+        <div class="stat-icon icon-green">✓</div>
+        <div>
+            <span>Resolved</span>
+            <h2>{{ statistics.resolved }}</h2>
+        </div>
+    </article>
+
+</section>
+
+<section class="section-block">
+
+    <div class="section-heading">
+        <span class="eyebrow">HOW IT WORKS</span>
+
+        <h2>Simple reporting. Better results.</h2>
+
+        <p>
+            Our complaint portal makes it easier to communicate
+            campus issues and follow their progress.
+        </p>
+    </div>
+
+    <div class="feature-grid">
+
+        <article class="feature-card">
+            <div class="feature-number">01</div>
+            <div class="feature-icon">01</div>
+
+            <h3>Report an Issue</h3>
+
+            <p>
+                Submit a complaint with the relevant category,
+                location, priority, and description.
+            </p>
+        </article>
+
+        <article class="feature-card">
+            <div class="feature-number">02</div>
+            <div class="feature-icon">02</div>
+
+            <h3>Track Progress</h3>
+
+            <p>
+                View your complaint history and check its current
+                status whenever you need.
+            </p>
+        </article>
+
+        <article class="feature-card">
+            <div class="feature-number">03</div>
+            <div class="feature-icon">03</div>
+
+            <h3>Get Resolution</h3>
+
+            <p>
+                Administrators review complaints, update progress,
+                and record their responses.
+            </p>
+        </article>
+
+    </div>
+
+</section>
+
+<section class="cta-banner">
+
+    <div>
+        <span class="eyebrow">MAKE YOUR VOICE COUNT</span>
+        <h2>Let's build a better campus together.</h2>
+        <p>Your feedback can make a real difference.</p>
+    </div>
+
+    <a href="{{ url_for('register') }}" class="btn btn-light">
+        Join CampusCare &rarr;
+    </a>
+
+</section>
+
+{% endblock %}

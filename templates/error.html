@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{{ code }} | CampusCare{% endblock %}
+
+{% block content %}
+
+<section class="error-page">
+
+    <span class="error-code">{{ code }}</span>
+
+    <h1>
+        {% if code == 404 %}
+            Page not found
+        {% else %}
+            Something went wrong
+        {% endif %}
+    </h1>
+
+    <p>{{ message }}</p>
+
+    <a href="{{ url_for('home') }}" class="btn btn-primary">
+        Return to Home
+    </a>
+
+</section>
+
+{% endblock %}

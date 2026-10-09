@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard | CampusCare{% endblock %}
+
+{% block content %}
+
+<section class="page-heading">
+
+    <div>
+        <span class="eyebrow">STUDENT PORTAL</span>
+
+        <h1>Welcome, {{ session.get('student_name', 'Student') }}!</h1>
+
+        <p>
+            Here's an overview of your complaints and their progress.
+        </p>
+    </div>
+
+    <a href="{{ url_for('submit_complaint') }}" class="btn btn-primary">
+        + New Complaint
+    </a>
+
+</section>
+
+<section class="stats-grid">
+
+    <article class="stat-card">
+        <div class="stat-icon icon-blue">C</div>
+        <div>
+            <span>Total Complaints</span>
+            <h2>{{ statistics.total }}</h2>
+        </div>
+    </article>
+
+    <article class="stat-card">
+        <div class="stat-icon icon-orange">P</div>
+        <div>
+            <span>Pending</span>
+            <h2>{{ statistics.pending }}</h2>
+        </div>
+    </article>
+
+    <article class="stat-card">
+        <div class="stat-icon icon-purple">W</div>
+        <div>
+            <span>In Progress</span>
+            <h2>{{ statistics.in_progress }}</h2>
+        </div>
+    </article>
+
+    <article class="stat-card">
+        <div class="stat-icon icon-green">✓</div>
+        <div>
+            <span>Resolved</span>
+            <h2>{{ statistics.resolved }}</h2>
+        </div>
+    </article>
+
+</section>
+
+<section class="content-card">
+
+    <div class="card-heading">
+        <div>
+            <h2>Recent Complaints</h2>
+            <p>Review the latest complaints you submitted.</p>
+        </div>
+
+        <a href="{{ url_for('my_complaints') }}" class="text-link">
+            View all &rarr;
+        </a>
+    </div>
+
+    {% if complaints %}
+
+        <div class="table-wrap">
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Complaint ID</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for complaint in complaints %}
+                        <tr>
+                            <td>
+                                <strong>{{ complaint.complaint_code }}</strong>
+                            </td>
+
+                            <td>{{ complaint.title }}</td>
+
+                            <td>{{ complaint.category }}</td>
+
+                            <td>{{ complaint.created_at }}</td>
+
+                            <td>
+                                <span class="badge status-{{ complaint.status|lower|replace(' ', '-') }}">
+                                    {{ complaint.status }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <a
+                                    class="table-link"
+                                    href="{{ url_for('complaint_detail', complaint_id=complaint.id) }}"
+                                >
+                                    Details
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+    {% else %}
+
+        <div class="empty-state">
+            <div class="empty-icon">C</div>
+            <h3>No complaints yet</h3>
+
+            <p>
+                When you submit your first complaint,
+                it will appear here.
+            </p>
+
+            <a
+                href="{{ url_for('submit_complaint') }}"
+                class="btn btn-primary"
+            >
+                Submit First Complaint
+            </a>
+        </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

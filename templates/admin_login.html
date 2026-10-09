@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+
+{% block title %}Administrator Login | CampusCare{% endblock %}
+
+{% block content %}
+
+<section class="auth-layout">
+
+    <div class="auth-side admin-auth-side">
+
+        <span class="eyebrow">ADMINISTRATION</span>
+
+        <h1>Manage complaints. Improve campus life.</h1>
+
+        <p>
+            Review student concerns, prioritize issues,
+            update progress, and communicate resolutions
+            through a single dashboard.
+        </p>
+
+        <div class="auth-benefits">
+            <p>✓ Centralized complaint management</p>
+            <p>✓ Status and priority tracking</p>
+            <p>✓ Student information and responses</p>
+        </div>
+
+    </div>
+
+    <div class="auth-card login-card">
+
+        <div class="auth-heading">
+            <div class="auth-symbol">A</div>
+
+            <h2>Administrator Login</h2>
+
+            <p>Enter your administrator credentials.</p>
+        </div>
+
+        <form method="POST">
+
+            <div class="form-group">
+                <label for="username">Username</label>
+
+                <input
+                    id="username"
+                    type="text"
+                    name="username"
+                    autocomplete="username"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+
+                <input
+                    id="password"
+                    type="password"
+                    name="password"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <button class="btn btn-primary btn-block" type="submit">
+                Sign In to Admin Portal &rarr;
+            </button>
+
+        </form>
+
+        <p class="auth-switch">
+            <a href="{{ url_for('home') }}">Return to home page</a>
+        </p>
+
+    </div>
+
+</section>
+
+{% endblock %}
